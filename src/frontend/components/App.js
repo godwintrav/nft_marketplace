@@ -1,8 +1,24 @@
 
 import logo from './logo.png';
 import './App.css';
+
+import { useState } from 'react';
+import { ethers } from "ethers";
+import MarketplaceAbi from '../contractsData/Marketplace.json';
+import MarketplaceAddress from '../contractsData/Marketplace-address.json';
+import NFTAbi from '../contractsData/NFT.json';
+import NFTAddress from '../contractsData/NFT-address.json';
+
  
 function App() {
+  const [loading, setLoading] = useState(true);
+  const [account, setAccount] = useState(null);
+  const [nft, setNFT] = useState({});
+  const [marketplace, setMarketplace] = useState({});
+  //MetaMask Login/Connect
+  const web3Handler = async () => {
+    
+  }
   return (
     <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
