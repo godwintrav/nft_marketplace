@@ -14,6 +14,10 @@ import MarketplaceAddress from '../contractsData/Marketplace-address.json';
 import NFTAbi from '../contractsData/NFT.json';
 import NFTAddress from '../contractsData/NFT-address.json';
 import Navigation from './Navbar';
+import Home from './Home';
+import Create from './Create';
+import MyListedItem from './MyListedItem';
+import MyPurchases from './MyPurchases';
 
 
 function App() {
