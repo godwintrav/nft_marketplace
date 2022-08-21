@@ -2,7 +2,18 @@ import { useState } from 'react';
 import { ethers } from "ethers";
 import { Row, Form, Button } from 'react-bootstrap';
 import { create as ipfsHttpClient } from 'ipfs-http-client';
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
+var Buffer = require('buffer/').Buffer;
+
+const auth = 'Basic ' + Buffer.from(process.env.REACT_APP_PROJECT_ID + ':' + process.env.REACT_APP_PROJECT_SECRET).toString('base64');
+
+const client = ipfsHttpClient({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+    headers: {
+        authorization: auth,
+    },
+});
 
 const Create = ({ marketplace, nft }) => {
     const [image, setImage] = useState('');
@@ -17,7 +28,7 @@ const Create = ({ marketplace, nft }) => {
             try{
                 const result = await client.add(file);
                 console.log(result);
-                setImage(`https://ipfs.infura.io/ipfs/${result.path}`);
+                setImage(`https://trav-nft-marketplace.infura-ipfs.io/ipfs/${result.path}`);
             }catch (error){
                 console.log("ipfs image upload error: ", error);
             }
@@ -28,6 +39,7 @@ const Create = ({ marketplace, nft }) => {
         if(!image || !price || !name || !description) return;
         try {
             const result = await client.add(JSON.stringify({ image, name, description }));
+            console.log(result);
             mintThenList(result);
         }catch (error) {
             console.log("ipfs uri upload error: ", error);
@@ -35,7 +47,7 @@ const Create = ({ marketplace, nft }) => {
     }
 
     const mintThenList = async (result) => {
-        const uri = `https://ipfs.infura.io/ipfs/${result.path}`;
+        const uri = `https://trav-nft-marketplace.infura-ipfs.io/ipfs/${result.path}`;
         //mint nft
         await (await nft.mint(uri)).wait();
         //get tokenId of new nft
@@ -50,7 +62,7 @@ const Create = ({ marketplace, nft }) => {
     return (
         <div className='container-fluid mt-5'>
             <div className='row'>
-                <main role={main} className="col-lg-12 mx-auto" style={{ maxWidth: '1000px' }}>
+                <main role='main' className="col-lg-12 mx-auto" style={{ maxWidth: '1000px' }}>
                     <div className='content mx-auto'>
                         <Row className='g-4'>
                             <Form.Control 

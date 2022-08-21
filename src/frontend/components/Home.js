@@ -9,7 +9,7 @@ const Home = ({ marketplace, nft }) => {
     const loadMarketplaceItems = async () => {
         const itemCount = await marketplace.itemCount();
         let items = [];
-        for (let i = 1; i <= itemCount; i++) {
+        for (let i = 4; i <= itemCount; i++) {
             const item = await marketplace.items(i);
             if(!item.sold){
                 //get uri url from contract
